@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1050269746924-0tvpbgq62jvkj89h9d1uop0brtg778qf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1050269746924-0tvpbgq62jvkj89h9d1uop0brtg778qf</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCKz6py7gIatjsCDB1E7jyhw_pweU1mESo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1050269746924</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.joji.phexchangestore</string>
+	<key>PROJECT_ID</key>
+	<string>ph-exchange-store</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ph-exchange-store.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1050269746924:ios:b5157c72fecb1196c187c9</string>
+	<key>DATABASE_URL</key>
+	<string>https://ph-exchange-store.firebaseio.com</string>
+</dict>
+</plist>

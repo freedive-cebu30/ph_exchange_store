@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1050269746924",
+    "firebase_url": "https://ph-exchange-store.firebaseio.com",
+    "project_id": "ph-exchange-store",
+    "storage_bucket": "ph-exchange-store.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050269746924:android:875acf17156e4cbbc187c9",
+        "android_client_info": {
+          "package_name": "com.joji.phexchangestore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050269746924-0qsrhasj677vc2jeuf3tm078ieup508j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ47PhFrY-jjrkASZ6WicMksV2VV-UB0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050269746924-0qsrhasj677vc2jeuf3tm078ieup508j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
