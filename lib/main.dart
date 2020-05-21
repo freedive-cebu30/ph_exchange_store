@@ -2,32 +2,51 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:phexchangestore/models/store.dart';
 import 'package:phexchangestore/models/store_data.dart';
+
+import 'i18n.dart';
+import 'i18n_delegate.dart';
 
 final _firestore = Firestore.instance;
 Completer<GoogleMapController> _controller = Completer();
 
 void main() {
   runApp(
-    MyApp(),
+    ExchangeShop(),
   );
 }
 
-class MyApp extends StatelessWidget {
+class ExchangeShop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: Text('フィリピンの両替所'),
-          ),
-        ),
-        body: MapCebu(),
+      localizationsDelegates: [
+        const I18nDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale("en", "US"),
+        const Locale("ja", "JP"),
+      ],
+      home: ExchangeShopApp(),
+    );
+  }
+}
+
+class ExchangeShopApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(child: Text(I18n.of(context).title)),
       ),
+      body: MapCebu(),
     );
   }
 }
@@ -60,6 +79,7 @@ class MapCebuState extends State<MapCebu> {
 
   @override
   Widget build(BuildContext context) {
+    Locale _locale = Localizations.localeOf(context);
     return new Scaffold(
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -76,7 +96,7 @@ class MapCebuState extends State<MapCebu> {
           top: 400.0,
         ),
         markers: Set.from(
-          _createMarker(),
+          _createMarker(_locale),
         ),
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
@@ -85,10 +105,20 @@ class MapCebuState extends State<MapCebu> {
     );
   }
 
-  Set<Marker> _createMarker() {
+  Set<Marker> _createMarker(Locale locale) {
     Set<Marker> markers = {};
 
     storeData.getStores().asMap().forEach((i, store) {
+      String _title;
+      String _content;
+      if (locale.toString() == 'ja_JP') {
+        _title = store.title;
+        _content = store.content;
+      } else {
+        _title = store.enTitle;
+        _content = store.enContent;
+      }
+
       markers.add(
         Marker(
           markerId: MarkerId('myMarker$i'),
@@ -99,8 +129,8 @@ class MapCebuState extends State<MapCebu> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: new Text(store.title),
-                  content: new Text(store.content),
+                  title: new Text(_title),
+                  content: new Text(_content),
                 );
               },
             );
@@ -117,12 +147,12 @@ class MapCebuState extends State<MapCebu> {
     for (var store in stores.documents) {
       double latitude = store.data['location'].latitude;
       double longitude = store.data['location'].longitude;
-      String title = store.data['title'];
-      String content = store.data['content'];
       storeData.addStore(
         Store(
-          title: title,
-          content: content,
+          title: store.data['title'],
+          content: store.data['content'],
+          enTitle: store.data['en_title'],
+          enContent: store.data['en_content'],
           location: LatLng(latitude, longitude),
         ),
       );
