@@ -52,5 +52,8 @@
 		<string>en</string>
 		<string>ja</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
+
 </dict>
 </plist>

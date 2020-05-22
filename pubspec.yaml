@@ -34,16 +34,21 @@ dependencies:
   cloud_firestore: ^0.13.5
   intl: ^0.16.1
   devicelocale: ^0.2.3
-  flutter_launcher_icons: ^0.7.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.5
+  flutter_native_splash: ^0.1.9
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/icon/money.png"
+
+flutter_native_splash:
+  image: assets/images/money.png
+  color: "42a5f5"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
