@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,6 +9,7 @@ import 'package:location/location.dart';
 import 'package:phexchangestore/models/store.dart';
 import 'package:phexchangestore/models/store_data.dart';
 
+import 'constant.dart';
 import 'i18n.dart';
 import 'i18n_delegate.dart';
 
@@ -66,6 +68,14 @@ class MapCebuState extends State<MapCebu> {
   @override
   void initState() {
     super.initState();
+    FirebaseAdMob.instance.initialize(appId: kAppId);
+//    FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
+    BannerAd _bannerAd = _createBannerAd();
+    _bannerAd
+      ..load()
+      ..show(
+        anchorOffset: 20.0,
+      );
     initPlatformState();
     setCustomMapPin();
     getStores();
@@ -93,7 +103,8 @@ class MapCebuState extends State<MapCebu> {
         compassEnabled: false,
         myLocationEnabled: true,
         padding: EdgeInsets.only(
-          top: 400.0,
+          top: 310.0,
+          bottom: 90,
         ),
         markers: Set.from(
           _createMarker(_locale),
@@ -180,4 +191,20 @@ class MapCebuState extends State<MapCebu> {
       currentLocation = myLocation;
     });
   }
+
+  BannerAd _createBannerAd() {
+    return new BannerAd(
+      adUnitId: kAdUnitId,
+//      adUnitId: BannerAd.testAdUnitId,
+      size: AdSize.banner,
+      targetingInfo: _targetingInfo,
+    );
+  }
+
+  MobileAdTargetingInfo _targetingInfo = new MobileAdTargetingInfo(
+    keywords: <String>[
+      'travel',
+      'philippines',
+    ],
+  );
 }

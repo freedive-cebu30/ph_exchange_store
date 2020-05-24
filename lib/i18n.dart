@@ -11,10 +11,10 @@ class I18n {
 
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
-      'title': 'Exchange Shop in Cebu',
+      'title': 'Exchange Shops in Philippines',
     },
     'ja': {
-      'title': 'セブの両替所',
+      'title': 'フィリピンの両替所',
     },
   };
 
