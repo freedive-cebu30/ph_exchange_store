@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_admob/firebase_admob.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:package_info/package_info.dart';
+import 'package:permission_handler/permission_handler.dart' as per_handler;
 import 'package:phexchangestore/models/store.dart';
 import 'package:phexchangestore/models/store_data.dart';
 
@@ -41,14 +44,74 @@ class ExchangeShop extends StatelessWidget {
   }
 }
 
-class ExchangeShopApp extends StatelessWidget {
+class ExchangeShopApp extends StatefulWidget {
+  @override
+  _ExchangeShopAppState createState() => _ExchangeShopAppState();
+}
+
+class _ExchangeShopAppState extends State<ExchangeShopApp> {
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+  );
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(I18n.of(context).title)),
+        title: Center(
+          child: Text(
+            I18n.of(context).title,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
       body: MapCebu(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                I18n.of(context).title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text(I18n.of(context).license),
+              onTap: () {
+                showLicensePage(
+                  context: context,
+                  applicationName: I18n.of(context).title,
+                  applicationVersion: _packageInfo.version,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -68,6 +131,10 @@ class MapCebuState extends State<MapCebu> {
   @override
   void initState() {
     super.initState();
+    initPlatformState();
+    setCustomMapPin();
+    setStores();
+
     FirebaseAdMob.instance.initialize(appId: kAppId);
 //    FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
     BannerAd _bannerAd = _createBannerAd();
@@ -76,9 +143,6 @@ class MapCebuState extends State<MapCebu> {
       ..show(
         anchorOffset: 20.0,
       );
-    initPlatformState();
-    setCustomMapPin();
-    getStores();
 
     _locationService.onLocationChanged.listen((LocationData result) async {
       setState(() {
@@ -153,7 +217,7 @@ class MapCebuState extends State<MapCebu> {
     return markers;
   }
 
-  void getStores() async {
+  void setStores() async {
     final stores = await _firestore.collection('stores').getDocuments();
     for (var store in stores.documents) {
       double latitude = store.data['location'].latitude;
@@ -180,13 +244,21 @@ class MapCebuState extends State<MapCebu> {
     try {
       myLocation = await _locationService.getLocation();
     } catch (e) {
-      if (e.code == 'PERMISSION_DENITED')
+      if (e.code == 'PERMISSION_DENIED')
         error = 'Permission denited';
       else if (e.code == 'PERMISSION_DENITED_NEVER_ASK')
         error =
             'Permission denited - please ask the user to enable it from the app settings';
-      myLocation = null;
+      bool isShown =
+          await per_handler.Permission.contacts.shouldShowRequestRationale;
+      if (isShown == false) {
+        per_handler.openAppSettings();
+        sleep(new Duration(seconds: 2));
+      }
+      // 位置情報の権限がない場合は、アプリを使えない仕様にする
+      exit(0);
     }
+
     setState(() {
       currentLocation = myLocation;
     });

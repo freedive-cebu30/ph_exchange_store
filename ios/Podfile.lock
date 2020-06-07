@@ -362,6 +362,10 @@ PODS:
     - nanopb/encode (= 1.30905.0)
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
+  - package_info (0.0.1):
+    - Flutter
+  - "permission_handler (5.0.0+hotfix.6)":
+    - Flutter
   - PromisesObjC (1.2.8)
 
 DEPENDENCIES:
@@ -376,6 +380,8 @@ DEPENDENCIES:
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - location_web (from `.symlinks/plugins/location_web/ios`)
+  - package_info (from `.symlinks/plugins/package_info/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
 SPEC REPOS:
   trunk:
@@ -424,6 +430,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/location/ios"
   location_web:
     :path: ".symlinks/plugins/location_web/ios"
+  package_info:
+    :path: ".symlinks/plugins/package_info/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -457,6 +467,8 @@ SPEC CHECKSUMS:
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   location_web: b94e7433cfe28c0f7c8923c2ee482824b32e55a7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
+  permission_handler: b7a0953389e699927c6217933754cdcd0fa2c5a7
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
 
 PODFILE CHECKSUM: 2609452b760cd11039b14039a86564367a3d8ab9

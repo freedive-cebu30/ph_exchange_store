@@ -36,6 +36,8 @@ dependencies:
   firebase_core: ^0.4.4+3
   firebase_admob: ^0.9.3+2
   cloud_firestore: ^0.13.5
+  permission_handler: ^5.0.0+hotfix.6
+  package_info: ^0.4.0+18
 
 dev_dependencies:
   flutter_test:

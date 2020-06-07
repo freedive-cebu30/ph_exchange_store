@@ -12,13 +12,19 @@ class I18n {
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'title': 'Exchange Shops in Philippines',
+      'license': 'License',
     },
     'ja': {
       'title': 'フィリピンの両替所',
+      'license': 'ライセンス情報',
     },
   };
 
   String get title {
     return _localizedValues[locale.languageCode]['title'];
+  }
+
+  String get license {
+    return _localizedValues[locale.languageCode]['license'];
   }
 }
